@@ -1,0 +1,64 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    /*
+     * Complete the 'miniMaxSum' function below.
+     *
+     * The function accepts INTEGER_ARRAY arr as parameter.
+     */
+
+    public static void miniMaxSum(List<Integer> arr) {
+    // Write your code here
+// Initialize min, max, and sum with the first element of the array
+        int min = arr.get(0);
+        int max = arr.get(0);
+        long sum = arr.get(0);
+
+        // Iterate through the array starting from the second element (index 1)
+        for (int i = 1; i < arr.size(); i++) {
+            int num = arr.get(i);
+            sum += num;  // Accumulate the sum
+
+            // Update min and max values
+            if (num < min) {
+                min = num;  // Update the minimum value
+            }
+            if (num > max) {
+                max = num;  // Update the maximum value
+            }
+        }
+
+        // Calculate the minimum and maximum sums by excluding the min and max elements
+        long minSum = sum - max;  // Exclude the maximum value
+        long maxSum = sum - min;  // Exclude the minimum value
+
+        // Print the result (minSum maxSum)
+        System.out.println(minSum + " " + maxSum);
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        List<Integer> arr = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(toList());
+
+        Result.miniMaxSum(arr);
+
+        bufferedReader.close();
+    }
+}
